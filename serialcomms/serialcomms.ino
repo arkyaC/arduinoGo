@@ -3,13 +3,14 @@ int incomingByte = 0;   // for incoming serial data
 int addr = 0;
 int command;
 int addr_input;
+int data_input;
 int value_output;
+byte value[8];
 void setup() {
         Serial.begin(9600);     // opens serial port, sets data rate to 9600 bps
         pinMode(13, OUTPUT);    // TO check when the EEPROM is cleared
-         for (int i = 0 ; i < EEPROM.length() ; i++) {//EEPROM cleared after each run, remove from final code
-    EEPROM.write(i, 0);
-  }
+        
+  
 
   // turn the LED on when we're done
   digitalWrite(13, HIGH);
@@ -25,13 +26,16 @@ Serial.println();
 if(command==119){
                 Serial.println("Writing to memory:");
                 // read the incoming byte:
+               
                 while(!Serial.available());
-                incomingByte = Serial.read();
-                Serial.println(char(incomingByte));
-                while(!Serial.available());
-                addr= Serial.read();
+                addr=Serial.read() ;
                 Serial.println(addr);
-                EEPROM.write(addr, incomingByte);
+                while(!Serial.available());
+                data_input=Serial.parseInt();
+                data_input=data_input+128;
+                
+  Serial.println(data_input, BIN);
+                EEPROM.write(addr, data_input);
                 // say what you got:
                  Serial.println("Write Complete" );
                
@@ -40,15 +44,37 @@ if(command==119){
   while(!Serial.available());
   addr_input= Serial.read();
   value_output = EEPROM.read(addr_input);
+  for (byte i=0; i<8; i++) {
+    value[7-i] = bitRead(value_output, i);
+  }
+   for (byte j=0; j<8; j++) {
+    Serial.print(value[j]);
+  }
 
-  Serial.print(char(value_output));
-  Serial.print("\t");
-  Serial.println(value_output, BIN);
+  
+  }
+  else if( command == 67){
+  Serial.println("Flushing memory:");
+   for (int i = 0 ; i < EEPROM.length() ; i++) {//EEPROM cleared after each run, remove from final code
+    EEPROM.write(i, 0);
+   
+  }
+  Serial.println("Memory cleared"); 
 }
         delay(100);
 }
 }
  
+
+
+
+
+
+
+
+
+ 
+
 
 
 
