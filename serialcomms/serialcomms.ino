@@ -1,10 +1,10 @@
-int incomingByte = 0;   // for incoming serial data
 #include <EEPROM.h>
 int addr = 0;
 int command;
 int addr_input;
 int data_input;
 int value_output;
+int flag=0;
 byte value[8];
 void setup() {
         Serial.begin(9600);     // opens serial port, sets data rate to 9600 bps
@@ -44,6 +44,7 @@ if(command==119){
   while(!Serial.available());
   addr_input= Serial.read();
   value_output = EEPROM.read(addr_input);
+  flag=1;
   for (byte i=0; i<8; i++) {
     value[7-i] = bitRead(value_output, i);
   }
@@ -64,6 +65,17 @@ if(command==119){
         delay(100);
 }
 }
+ 
+
+
+
+
+
+
+
+
+ 
+
  
 
 
