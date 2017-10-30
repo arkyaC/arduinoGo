@@ -33,7 +33,7 @@ void setup() {
     if(Serial.available()>0){
       pos=Serial.parseInt();
     }
-    if(pos>=150){//servo is activated here
+    if(pos>=130){//servo is activated here
       myservo.attach(3);
       myservo.write(pos);
       Serial.println(pos);
