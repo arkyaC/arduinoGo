@@ -10,7 +10,7 @@ Stepper myStepper_y(stepsPerRevolution, 8, 9, 10, 11);
 Stepper myStepper_x(stepsPerRevolution,4,5,6,7);
 
 int nSteps;//to contain number of steps per iteration for the stepper
-int penDown = 165, penUp = 180; //pen down and up positions for the servo
+int penDown = 160, penUp = 180; //pen down and up positions for the servo
 int servoPos;
 int segLength = 5;//length of each segment of the 7-segment
 int flag = 0;// 1 when there's meaningful input from user
